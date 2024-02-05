@@ -19,13 +19,9 @@ export const Form = styled.form`
     padding: 0 10px;
     border-radius: 4px;
     margin-top: 10px;
+  }
 
-    &:focus {
-      border: 1px solid ${colors.primaryColor};
-    }
-
-    button {
-
-    }
+  &:focus {
+    border: 1px solid ${colors.primaryColor};
   }
 `;
