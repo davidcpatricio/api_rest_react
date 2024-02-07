@@ -24,6 +24,51 @@ function* loginRequest({ payload }) {
   }
 }
 
+function* registerRequest({ payload }) {
+  const { id, name, email, password } = payload;
+
+  try {
+    if (id) {
+      yield call(axios.put, '/users', {
+        name,
+        email,
+        password,
+      });
+      toast.success('Successfully updated!');
+      yield put(actions.registerUpdatedSuccess({ name, email, password }));
+    } else {
+      yield call(axios.post, '/users', {
+        name,
+        email,
+        password,
+      });
+      toast.success('Successfully registered!');
+      yield put(actions.registerCreatedSuccess({ name, email, password }));
+      history.push('/login');
+    }
+  } catch (e) {
+    const errors = get(e, 'response.data.errors', []);
+    const status = get(e, 'response.status', 0);
+
+    console.log(errors);
+    console.log(status);
+
+    if (status === 401) {
+      toast.error('You must log in again.');
+      yield put(actions.loginFailure());
+      return history.push('/login');
+    }
+
+    if (errors.length > 0) {
+      errors.map((error) => toast.error(error));
+    } else {
+      toast.error('Unknown error.');
+    }
+
+    yield put(actions.registerFailure());
+  }
+}
+
 function persistRehydrate({ payload }) {
   const token = get(payload, 'auth.token', '');
   if (!token) return;
@@ -32,5 +77,6 @@ function persistRehydrate({ payload }) {
 
 export default all([
   takeLatest(types.LOGIN_REQUEST, loginRequest),
+  takeLatest(types.REGISTER_REQUEST, registerRequest),
   takeLatest(types.PERSIST_REHYDRATE, persistRehydrate),
 ]);
