@@ -1,6 +1,24 @@
+# BEFORE STARTING
+
+I used the REST API built in [this repository](https://github.com/davidcpatricio/api_rest_js). Please follow the instructions on the README.md file from that repository in order to clone the repository and run the project.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+# Clone repository
+
+Run the following command:
+
+```
+git clone https://github.com/davidcpatricio/api_rest_react
+```
+
+# Install dependencies
+
+```
+npm i
+```
 
 ## Available Scripts
 
